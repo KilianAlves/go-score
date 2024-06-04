@@ -73,3 +73,5 @@ func calculator(num1, num2 float64, operator string) (float64, error) {
 		return 0, errors.New("l'opérateur est invalide")
 	}
 }
+
+// func isPalindrome(number int) bool {}
