@@ -3,6 +3,7 @@ package main
 
 // importation du package fmt
 import (
+	"errors"
 	"fmt"
 )
 
@@ -13,6 +14,7 @@ func main() {
 	fizzBuzz(15)
 	fmt.Println(isPrime(1))
 	fmt.Println(primeNumbers(50))
+	fmt.Println(calculator(2, 5, "*"))
 }
 
 func fizzBuzz(number int) {
@@ -52,4 +54,22 @@ func primeNumbers(number int) []int {
 		}
 	}
 	return primeNumbers
+}
+
+func calculator(num1, num2 float64, operator string) (float64, error) {
+	switch operator {
+	case "+":
+		return num1 + num2, nil
+	case "-":
+		return num1 - num2, nil
+	case "*":
+		return num1 * num2, nil
+	case "/":
+		if num2 == 0 {
+			return 0, errors.New("on ne peut pas diviser par 0")
+		}
+		return num1 / num2, nil
+	default:
+		return 0, errors.New("l'opérateur est invalide")
+	}
 }
