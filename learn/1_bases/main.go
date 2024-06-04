@@ -8,20 +8,20 @@ import "fmt"
 func main() {
 	// invocation de la fonction Println déclarée dans le package fmt
 	fmt.Println("Hello, World!")
-	fizzBuzz(6)
-	fizzBuzz(10)
 	fizzBuzz(15)
 }
 
 func fizzBuzz(number int) {
-	switch {
-	case number%3 == 0 && number%5 == 0:
-		fmt.Println("FizzBuzz")
-	case number%3 == 0:
-		fmt.Println("Fizz")
-	case number%5 == 0:
-		fmt.Println("Buzz")
-	default:
-		fmt.Println(number)
+	for i := 1; i < number; i++ {
+		switch {
+		case i%3 == 0 && i%5 == 0:
+			fmt.Println("FizzBuzz")
+		case i%3 == 0:
+			fmt.Println("Fizz")
+		case i%5 == 0:
+			fmt.Println("Buzz")
+		default:
+			fmt.Println(i)
+		}
 	}
 }
