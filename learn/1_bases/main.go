@@ -9,6 +9,7 @@ func main() {
 	// invocation de la fonction Println déclarée dans le package fmt
 	fmt.Println("Hello, World!")
 	fizzBuzz(15)
+	fmt.Println(isPrime(4))
 }
 
 func fizzBuzz(number int) {
@@ -24,4 +25,15 @@ func fizzBuzz(number int) {
 			fmt.Println(i)
 		}
 	}
+}
+
+func isPrime(number int) bool {
+	for i := 1; i < number; i++ {
+		for j := 1; j < number; j++ {
+			if i*j == number {
+				return false
+			}
+		}
+	}
+	return true
 }
