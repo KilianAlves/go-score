@@ -5,11 +5,14 @@ package main
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 func main() {
 	// invocation de la fonction Println déclarée dans le package fmt
 	fmt.Println("Hello, World!")
+	displayShape(NewRectangle("rectangle", 2, 5))
+	displayShape(NewCircle("circle", 5))
 }
 
 type BaseShape struct {
@@ -79,5 +82,11 @@ func NewCircle(name string, radius float64) Circle {
 }
 
 func displayShape(shape Shape) {
-
+	var aire = strconv.FormatFloat(shape.GetArea(), 'f', -1, 64)
+	switch {
+	case shape.IsPolygon():
+		println(shape.GetName() + " est un polygone. Son aire est " + aire)
+	case !shape.IsPolygon():
+		println(shape.GetName() + " n'est pas un polygone. Son aire est " + aire)
+	}
 }
