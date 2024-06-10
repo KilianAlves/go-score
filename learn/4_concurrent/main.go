@@ -14,31 +14,48 @@ func pi(iterStart uint, iterEnd uint) float64 {
 	return 4 * result
 }
 
-func piRoutine(iterStart uint, iterEnd uint, ch chan uint) {
+func piRoutine(iterStart uint, iterEnd uint, ch chan float64) {
 	pi := pi(iterStart, iterEnd)
-	ch <- uint(pi)
+	ch <- pi
 }
 
-func piConcurrent(iter uint) uint {
-	ch := make(chan uint)
-	go piRoutine(0, iter, ch)
-	res := <-ch
-	go piRoutine(0, iter, ch)
-	res += <-ch
+func piConcurrent(iter uint, taskCount uint) float64 {
+	ch := make(chan float64, taskCount)
 
-	return res
+	iterationsPerTask := iter / taskCount
 
+	for i := uint(0); i < taskCount; i++ {
+		start := i * iterationsPerTask
+		end := start + iterationsPerTask
+		if i == taskCount-1 {
+			end = iter
+		}
+		go piRoutine(start, end, ch)
+	}
+
+	piResult := 0.0
+	for i := uint(0); i < taskCount; i++ {
+		piResult += <-ch
+	}
+
+	return piResult
 }
 
 func main() {
-	start := time.Now()
 
+	start1 := time.Now()
 	pi := pi(0, 1200000000)
+	end1 := time.Now()
 
-	piConcurrent := piConcurrent(1200000000)
+	start2 := time.Now()
+	piConcurrent2 := piConcurrent(1200000000, 2)
+	end2 := time.Now()
 
-	end := time.Now()
+	start3 := time.Now()
+	piConcurrent3 := piConcurrent(1200000000, 4)
+	end3 := time.Now()
 
-	fmt.Println("1 thread :", pi, end.Sub(start))
-	fmt.Println("2 thread :", piConcurrent, end.Sub(start))
+	fmt.Println("1 thread :", pi, end1.Sub(start1))
+	fmt.Println("2 thread :", piConcurrent2, end2.Sub(start2))
+	fmt.Println("plusieurs thread :", piConcurrent3, end3.Sub(start3))
 }
