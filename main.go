@@ -2,6 +2,7 @@ package main
 
 import (
 	"but3/go-score/hello"
+	"but3/go-score/services/mongodb"
 	"log"
 	"net/http"
 
@@ -9,6 +10,9 @@ import (
 )
 
 func main() {
+	if mongodb.Collection("hello").Name() != "hello" {
+		panic("Problème d'accès à la collection hello")
+	}
 	// création du routeur
 	router := http.NewServeMux()
 
