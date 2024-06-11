@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	// temp, verif mongoDB
 	if mongodb.Collection("hello").Name() != "hello" {
 		panic("Problème d'accès à la collection hello")
 	}
@@ -17,6 +18,7 @@ func main() {
 	router := http.NewServeMux()
 
 	// association de la route /api/hello/world (avec de la méthode GET) à la fonction HelloWorld
+	router.HandleFunc("GET /api/hello", hello.ReadAll)
 	router.HandleFunc("GET /api/hello/world", hello.HelloWorld)
 	router.HandleFunc("GET /api/hello/square/", hello.Square)
 	// configuration du serveur

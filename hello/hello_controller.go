@@ -1,11 +1,23 @@
 package hello
 
 import (
+	"but3/go-score/services/mongodb"
 	"but3/go-score/services/send"
+	"context"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
+
+func ReadAll(res http.ResponseWriter, _ *http.Request) {
+	var result []HelloData
+	cursor, _ := mongodb.Collection("hello").Find(context.Background(), bson.D{})
+	cursor.All(context.Background(), &result)
+
+	send.Json(result, res)
+}
 
 func HelloWorld(res http.ResponseWriter, _ *http.Request) {
 	// préparation des données à envoyer
