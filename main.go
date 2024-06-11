@@ -19,6 +19,8 @@ func main() {
 
 	// association de la route /api/hello/world (avec de la méthode GET) à la fonction HelloWorld
 	router.HandleFunc("GET /api/hello", hello.ReadAll)
+	router.HandleFunc("POST /api/hello", hello.Create)
+	router.HandleFunc("GET /api/hello/", hello.Read)
 	router.HandleFunc("GET /api/hello/world", hello.HelloWorld)
 	router.HandleFunc("GET /api/hello/square/", hello.Square)
 	// configuration du serveur

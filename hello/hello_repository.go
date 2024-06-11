@@ -5,6 +5,7 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -34,4 +35,14 @@ func (repository *helloRepository) FindAll() ([]HelloData, error) {
 	} else {
 		return result, nil
 	}
+}
+
+func (repository *helloRepository) insertOne(message HelloData) {
+	repository.Collection.InsertOne(context.Background(), message)
+}
+
+func (repository *helloRepository) findById(Id primitive.ObjectID) {
+	filter := bson.D{{Key: "_id", Value: Id}}
+	repository.Collection.FindOne(context.Background(), filter)
+
 }
