@@ -2,6 +2,7 @@ package main
 
 import (
 	"but3/go-score/hello"
+	"but3/go-score/player"
 	"but3/go-score/services/mongodb"
 	"log"
 	"net/http"
@@ -19,6 +20,7 @@ func main() {
 
 	// association de la route /api/hello/world (avec de la méthode GET) à la fonction HelloWorld
 	router.Handle("/api/hello/", http.StripPrefix("/api/hello", hello.Router()))
+	router.Handle("/api/player/", http.StripPrefix("/api/player", player.Router()))
 
 	// configuration du serveur
 	server := http.Server{
