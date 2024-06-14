@@ -30,10 +30,9 @@ func Create(res http.ResponseWriter, req *http.Request) {
 func Read(res http.ResponseWriter, req *http.Request) {
 	parts := strings.Split(req.URL.Path, "/")
 	id := parts[len(parts)-1]
-
 	objectId, _ := primitive.ObjectIDFromHex(id)
-	repository.findById(objectId)
-	// send.Json(helloData, res)
+	result := repository.findById(objectId)
+	send.Json(result, res)
 }
 
 func HelloWorld(res http.ResponseWriter, _ *http.Request) {

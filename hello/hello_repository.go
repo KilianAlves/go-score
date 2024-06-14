@@ -41,8 +41,10 @@ func (repository *helloRepository) insertOne(message HelloData) {
 	repository.Collection.InsertOne(context.Background(), message)
 }
 
-func (repository *helloRepository) findById(Id primitive.ObjectID) {
+func (repository *helloRepository) findById(Id primitive.ObjectID) HelloData {
+	var result HelloData
 	filter := bson.D{{Key: "_id", Value: Id}}
-	repository.Collection.FindOne(context.Background(), filter)
-
+	cursor := repository.Collection.FindOne(context.Background(), filter)
+	cursor.Decode(&result)
+	return result
 }
