@@ -31,7 +31,15 @@ func Read(res http.ResponseWriter, req *http.Request) {
 	parts := strings.Split(req.URL.Path, "/")
 	id := parts[len(parts)-1]
 	objectId, _ := primitive.ObjectIDFromHex(id)
-	result := repository.findById(objectId)
+	result, _ := repository.findById(objectId)
+	send.Json(result, res)
+}
+
+func Delete(res http.ResponseWriter, req *http.Request) {
+	parts := strings.Split(req.URL.Path, "/")
+	id := parts[len(parts)-1]
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	result, _ := repository.Delete(objectId)
 	send.Json(result, res)
 }
 

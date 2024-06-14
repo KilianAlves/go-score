@@ -21,6 +21,7 @@ func main() {
 	router.HandleFunc("GET /api/hello", hello.ReadAll)
 	router.HandleFunc("POST /api/hello", hello.Create)
 	router.HandleFunc("GET /api/hello/", hello.Read)
+	router.HandleFunc("DELETE /api/hello/", hello.Delete)
 	router.HandleFunc("GET /api/hello/world", hello.HelloWorld)
 	router.HandleFunc("GET /api/hello/square/", hello.Square)
 	// configuration du serveur

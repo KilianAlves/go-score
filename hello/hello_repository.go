@@ -37,14 +37,26 @@ func (repository *helloRepository) FindAll() ([]HelloData, error) {
 	}
 }
 
-func (repository *helloRepository) insertOne(message HelloData) {
-	repository.Collection.InsertOne(context.Background(), message)
+func (repository *helloRepository) insertOne(message HelloData) (*mongo.InsertOneResult, error) {
+	return repository.Collection.InsertOne(context.Background(), message)
+
 }
 
-func (repository *helloRepository) findById(Id primitive.ObjectID) HelloData {
+func (repository *helloRepository) findById(Id primitive.ObjectID) (HelloData, error) {
 	var result HelloData
 	filter := bson.D{{Key: "_id", Value: Id}}
 	cursor := repository.Collection.FindOne(context.Background(), filter)
 	cursor.Decode(&result)
-	return result
+	return result, nil
+}
+
+func (repository *helloRepository) Delete(Id primitive.ObjectID) (*mongo.DeleteResult, error) {
+	filter := bson.D{{Key: "_id", Value: Id}}
+	result, err := repository.Collection.DeleteOne(context.Background(), filter)
+
+	if err != nil {
+		return nil, err
+	} else {
+		return result, nil
+	}
 }
