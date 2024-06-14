@@ -37,9 +37,10 @@ func (repository *helloRepository) FindAll() ([]HelloData, error) {
 	}
 }
 
-func (repository *helloRepository) insertOne(message HelloData) (*mongo.InsertOneResult, error) {
-	return repository.Collection.InsertOne(context.Background(), message)
-
+func (repository *helloRepository) insertOne(Data HelloData) (HelloData, error) {
+	result, err := repository.Collection.InsertOne(context.Background(), Data)
+	Data.Id = result.InsertedID.(primitive.ObjectID)
+	return Data, err
 }
 
 func (repository *helloRepository) findById(Id primitive.ObjectID) (HelloData, error) {

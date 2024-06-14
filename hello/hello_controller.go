@@ -23,21 +23,20 @@ func Create(res http.ResponseWriter, req *http.Request) {
 		http.Error(res, err.Error(), http.StatusBadRequest)
 		return
 	}
-	repository.insertOne(helloData)
-	send.Json(helloData, res)
+	Data, _ := repository.insertOne(helloData)
+
+	send.Json(Data, res)
 }
 
 func Read(res http.ResponseWriter, req *http.Request) {
-	parts := strings.Split(req.URL.Path, "/")
-	id := parts[len(parts)-1]
+	id := req.PathValue("id")
 	objectId, _ := primitive.ObjectIDFromHex(id)
 	result, _ := repository.findById(objectId)
 	send.Json(result, res)
 }
 
 func Delete(res http.ResponseWriter, req *http.Request) {
-	parts := strings.Split(req.URL.Path, "/")
-	id := parts[len(parts)-1]
+	id := req.PathValue("id")
 	objectId, _ := primitive.ObjectIDFromHex(id)
 	result, _ := repository.Delete(objectId)
 	send.Json(result, res)

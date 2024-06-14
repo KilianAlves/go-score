@@ -18,12 +18,8 @@ func main() {
 	router := http.NewServeMux()
 
 	// association de la route /api/hello/world (avec de la méthode GET) à la fonction HelloWorld
-	router.HandleFunc("GET /api/hello", hello.ReadAll)
-	router.HandleFunc("POST /api/hello", hello.Create)
-	router.HandleFunc("GET /api/hello/", hello.Read)
-	router.HandleFunc("DELETE /api/hello/", hello.Delete)
-	router.HandleFunc("GET /api/hello/world", hello.HelloWorld)
-	router.HandleFunc("GET /api/hello/square/", hello.Square)
+	router.Handle("/api/hello/", http.StripPrefix("/api/hello", hello.Router()))
+
 	// configuration du serveur
 	server := http.Server{
 		Addr:    ":8888",
